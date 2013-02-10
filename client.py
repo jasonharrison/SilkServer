@@ -39,12 +39,13 @@ class Droplet:
             return False
         droplet_info=self.request("droplets/"+str(self.droplet_id),payload={"client_id": self.client_id, "api_key": self.api_key}).json()['droplet']
         return droplet_info
+    def list_images(self):
+        return self.request("/images").json['images']
     def request(self, target, payload={}, action="servers"):
         headers = {'User-Agent': 'SilkServer/git'}
         payload['client_id'] = self.client_id
         payload['api_key'] = self.api_key
         r = requests.get(API_URI+target+"/", headers=headers, params=payload)
-        print r.json()
-        assert r.json().get("status") != "ERROR"
+        assert r.json.get("status") != "ERROR"
         return r
         
