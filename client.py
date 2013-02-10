@@ -25,10 +25,10 @@ class Droplet:
         self.client_id = self.client.client_id
         self.api_key = self.client.api_key
     def create(self, name, size_num, image_id, region_id): #size_num != size id.  the higher the number, the bigger the server.  image ids: 12573 is debian x64. region ids: 1 = new york 1, 2 = amsterdam 1.  
-        sizes=requests.get(API_URI+"sizes/",params={"client_id": self.client_id, "api_key": self.api_key}).json().get("sizes")
+        sizes=requests.get(API_URI+"sizes/",params={"client_id": self.client_id, "api_key": self.api_key}).json.get("sizes")
         size_id=sizes[size_num]['id']
         r=self.request("droplets/new",payload={"name":name,"size_id":size_id,'image_id':image_id,'region_id':region_id})
-        self.droplet_id = r.json()['droplet']['id']
+        self.droplet_id = r.json['droplet']['id']
     def destroy(self):
         if self.droplet_id == None:
             return False
@@ -37,7 +37,7 @@ class Droplet:
     def info(self):
         if self.droplet_id == None:
             return False
-        droplet_info=self.request("droplets/"+str(self.droplet_id),payload={"client_id": self.client_id, "api_key": self.api_key}).json()['droplet']
+        droplet_info=self.request("droplets/"+str(self.droplet_id),payload={"client_id": self.client_id, "api_key": self.api_key}).json['droplet']
         return droplet_info
     def images(self):
         return self.request("/images").json['images']
